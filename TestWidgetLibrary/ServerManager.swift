@@ -54,7 +54,9 @@ public class ServerManager: NSObject {
 		let length: UInt = UInt(text.characters.count)
 		let data = length.data
 		
+		log(debug: "Write length of \(length)")
 		socket.write(data, withTimeout: -1, tag: Tag.headerTag.rawValue)
+		log(debug: "Write text - \(text)")
 		socket.write(text.data, withTimeout: -1, tag: Tag.bodyTag.rawValue)
 	}
 }
