@@ -32,11 +32,11 @@ public class ServerManager: NSObject {
 		socket.delegate = strongDelegate
 	}
 	
-	public func connect() throws {
+	public func connect(to host: String, onPort: Int) throws {
 		guard !isConnected else {
 			return
 		}
-		try socket.connect(toHost: "192.168.0.10", onPort: 5000)
+		try socket.connect(toHost: host, onPort: onPort)
 	}
 	
 	public func disconnect() {
