@@ -14,6 +14,7 @@ public class ServerManager: NSObject {
 	public static let shared = ServerManager()
 	
 	let socket: GCDAsyncSocket
+	let strongDelegate: ServerDelegate = ServerDelegate()
 	
 	public var isConnected: Bool {
 		return socket.isConnected
@@ -23,7 +24,7 @@ public class ServerManager: NSObject {
 		socket = GCDAsyncSocket()
 		super.init()
 		socket.delegateQueue = DispatchQueue.main
-		socket.delegate = ServerDelegate()
+		socket.delegate = strongDelegate
 	}
 	
 	public func connect() throws {
