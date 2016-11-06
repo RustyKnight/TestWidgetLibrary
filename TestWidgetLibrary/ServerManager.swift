@@ -16,6 +16,11 @@ public class ServerManager: NSObject {
 	let socket: GCDAsyncSocket
 	let strongDelegate: ServerDelegate = ServerDelegate()
 	
+	enum Tag: Int {
+		case headerTag = 100
+		case bodyTag = 101
+	}
+	
 	public var isConnected: Bool {
 		return socket.isConnected
 	}
@@ -49,7 +54,8 @@ public class ServerManager: NSObject {
 		let length: UInt = UInt(text.characters.count)
 		let data = length.data
 		
-		socket.write(data, withTimeout: -1, tag: 1)
+		socket.write(data, withTimeout: -1, tag: Tag.headerTag.rawValue)
+		socket.write(text.data, withTimeout: -1, tag: Tag.bodyTag.rawValue)
 	}
 }
 
