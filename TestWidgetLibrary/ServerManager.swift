@@ -32,7 +32,7 @@ public class ServerManager: NSObject {
 		socket.delegate = strongDelegate
 	}
 	
-	public func connect(to host: String, onPort: Int) throws {
+	public func connect(to host: String, onPort: UInt16) throws {
 		guard !isConnected else {
 			return
 		}
