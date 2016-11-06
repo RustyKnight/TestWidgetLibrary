@@ -14,6 +14,7 @@
 		70AA9B141DCDC2E6002F9689 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70AA9B121DCDC2E6002F9689 /* SwiftyJSON.framework */; };
 		70AA9B171DCDC34C002F9689 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9B151DCDC34C002F9689 /* ServerManager.swift */; };
 		70AA9B181DCDC34C002F9689 /* LogUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9B161DCDC34C002F9689 /* LogUtilities.swift */; };
+		70AA9B3A1DCEE671002F9689 /* DataExtenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AA9B391DCEE671002F9689 /* DataExtenstion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 		70AA9B121DCDC2E6002F9689 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		70AA9B151DCDC34C002F9689 /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		70AA9B161DCDC34C002F9689 /* LogUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtilities.swift; sourceTree = "<group>"; };
+		70AA9B391DCEE671002F9689 /* DataExtenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtenstion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				70AA9B161DCDC34C002F9689 /* LogUtilities.swift */,
 				70AA9B151DCDC34C002F9689 /* ServerManager.swift */,
 				70AA9AF91DCDC261002F9689 /* TestWidgetLibrary.h */,
+				70AA9B391DCEE671002F9689 /* DataExtenstion.swift */,
 			);
 			path = TestWidgetLibrary;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70AA9B171DCDC34C002F9689 /* ServerManager.swift in Sources */,
+				70AA9B3A1DCEE671002F9689 /* DataExtenstion.swift in Sources */,
 				70AA9B181DCDC34C002F9689 /* LogUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -46,8 +46,8 @@ public class ServerManager: NSObject {
 			return
 		}
 		
-		var length: UInt = UInt(text.characters.count)
-		let data = Data(bytes: &length, count: MemoryLayout<UInt>.size)
+		let length: UInt = UInt(text.characters.count)
+		let data = length.data
 		
 		socket.write(data, withTimeout: -1, tag: 1)
 	}
