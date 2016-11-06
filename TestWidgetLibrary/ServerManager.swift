@@ -39,6 +39,17 @@ public class ServerManager: NSObject {
 		}
 		socket.disconnect()
 	}
+	
+	public func sendRequest(text: String) {
+		guard isConnected else {
+			return
+		}
+		
+		var length: UInt = UInt(text.characters.count)
+		let data = Data(bytes: &length, count: MemoryLayout<UInt>.size)
+		
+		socket.write(data, withTimeout: -1, tag: 1)
+	}
 }
 
 class ServerDelegate: NSObject, GCDAsyncSocketDelegate {
