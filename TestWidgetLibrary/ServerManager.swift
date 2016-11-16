@@ -72,7 +72,9 @@ extension ServerManager: GCDAsyncSocketDelegate {
 	}
 	
 	public func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+		log(debug: "Read data with tag of \(tag)")
 		guard let tagValue = Tag(rawValue: tag) else {
+			log(error: "Not a valid tag")
 			return
 		}
 		switch tagValue {
