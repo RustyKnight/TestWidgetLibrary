@@ -14,7 +14,6 @@ public class ServerManager: NSObject {
 	public static let shared = ServerManager()
 	
 	let socket: GCDAsyncSocket
-	let strongDelegate: ServerDelegate = ServerDelegate()
 	
 	enum Tag: Int {
 		case headerTag = 100
@@ -29,7 +28,7 @@ public class ServerManager: NSObject {
 		socket = GCDAsyncSocket()
 		super.init()
 		socket.delegateQueue = DispatchQueue.main
-		socket.delegate = strongDelegate
+		socket.delegate = self
 	}
 	
 	public func connect(to host: String, onPort: UInt16) throws {
@@ -61,15 +60,54 @@ public class ServerManager: NSObject {
 	}
 }
 
-class ServerDelegate: NSObject, GCDAsyncSocketDelegate {
-	func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
+extension ServerManager: GCDAsyncSocketDelegate {
+	
+	public func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
 		log(debug: "\(host):\(port)")
+		readHeader(from: sock)
 	}
 	
-	func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
+	public func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
 		log(debug: "\(err)")
 	}
 	
-	func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+	public func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
+		guard let tagValue = Tag(rawValue: tag) else {
+			return
+		}
+		switch tagValue {
+		case .bodyTag:
+			let text = String(data: data)
+			log(info: "Did read text \(text)")
+		case .headerTag:
+			guard let length = UInt(data: data) else {
+				log(error: "Failed to decode length from data ... \(data)")
+				readHeader(from: sock)
+				return
+			}
+			log(info: "Did read length of \(length)")
+			log(info: "Read body...")
+			readBody(from: sock, toLength: length)
+		}
+	}
+	
+	func readHeader(from socket: GCDAsyncSocket) {
+		log(debug: "Reading \(UInt(MemoryLayout<UInt>.size)) bytes")
+		socket.readData(toLength: UInt(MemoryLayout<UInt>.size),
+		                withTimeout: -1,
+		                tag: Tag.headerTag)
+	}
+	
+	func readBody(from socket: GCDAsyncSocket, toLength: UInt) {
+		log(debug: "Reading \(toLength) bytes")
+		socket.readData(toLength: toLength,
+		                withTimeout: -1,
+		                tag: Tag.bodyTag)
+	}
+}
+
+extension GCDAsyncSocket {
+	func readData<T: RawRepresentable>(toLength length: UInt, withTimeout timeout: TimeInterval, tag: T) where T.RawValue == Int {
+		readData(toLength: length, withTimeout: timeout, tag: tag)
 	}
 }
