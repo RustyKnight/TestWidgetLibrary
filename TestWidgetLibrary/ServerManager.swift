@@ -110,6 +110,6 @@ extension ServerManager: GCDAsyncSocketDelegate {
 
 extension GCDAsyncSocket {
 	func readData<T: RawRepresentable>(toLength length: UInt, withTimeout timeout: TimeInterval, tag: T) where T.RawValue == Int {
-		readData(toLength: length, withTimeout: timeout, tag: tag)
+		readData(toLength: length, withTimeout: timeout, tag: tag.rawValue)
 	}
 }
