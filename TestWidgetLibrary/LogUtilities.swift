@@ -17,22 +17,22 @@ func log(_ prefix: String, message: String, file: String = #file, function: Stri
 	print("\(prefix)[\(last)][\(function):\(line)] \(message)")
 }
 
-func log(debug: String, file: String = #file, function: String = #function, line: Int = #line) {
+public func log(debug: String, file: String = #file, function: String = #function, line: Int = #line) {
 	log("🐞", message: debug, file: file, function: function, line: line)
 }
 
-func log(info: String, file: String = #file, function: String = #function, line: Int = #line) {
+public func log(info: String, file: String = #file, function: String = #function, line: Int = #line) {
 	log("💡", message: info, file: file, function: function, line: line)
 }
 
-func log(warn: String, file: String = #file, function: String = #function, line: Int = #line) {
+public func log(warn: String, file: String = #file, function: String = #function, line: Int = #line) {
 	log("⚠️", message: warn, file: file, function: function, line: line)
 }
 
-func log(error: String, file: String = #file, function: String = #function, line: Int = #line) {
+public func log(error: String, file: String = #file, function: String = #function, line: Int = #line) {
 	log("☠️", message: error, file: file, function: function, line: line)
 }
 
-func log(_ error: Error, file: String = #file, function: String = #function, line: Int = #line) {
+public func log(_ error: Error, file: String = #file, function: String = #function, line: Int = #line) {
 	log("☠️", message: "\(error)", file: file, function: function, line: line)
 }
