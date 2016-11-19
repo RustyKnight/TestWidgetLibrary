@@ -94,7 +94,10 @@ extension ServerManager: GCDAsyncSocketDelegate {
 		}
 		switch tagValue {
 		case .bodyTag:
-			let text = String(describing: data)
+			guard let text = String(data: data) else {
+				log(info: "Failed to read data")
+				return
+			}
 			log(info: "Did read text \(text)")
 			let json = JSON(text)
 			delegate?.serverDidSendResponse(json)
