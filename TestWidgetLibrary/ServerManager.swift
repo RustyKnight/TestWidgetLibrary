@@ -10,7 +10,7 @@ import Foundation
 import CocoaAsyncSocket
 import SwiftyJSON
 
-protocol ServerDelegate {
+public protocol ServerDelegate {
 	func serverDidSendResponse(_ json: JSON)
 }
 
@@ -20,7 +20,7 @@ public class ServerManager: NSObject {
 	
 	let socket: GCDAsyncSocket
 	
-	var delegate: ServerDelegate?
+	public var delegate: ServerDelegate?
 	
 	enum Tag: Int {
 		case headerTag = 100
