@@ -8,12 +8,19 @@
 
 import Foundation
 import CocoaAsyncSocket
+import SwiftyJSON
+
+protocol ServerDelegate {
+	func serverDidSendResponse(_ json: JSON)
+}
 
 public class ServerManager: NSObject {
 	
 	public static let shared = ServerManager()
 	
 	let socket: GCDAsyncSocket
+	
+	var delegate: ServerDelegate?
 	
 	enum Tag: Int {
 		case headerTag = 100
@@ -43,6 +50,14 @@ public class ServerManager: NSObject {
 			return
 		}
 		socket.disconnect()
+	}
+	
+	public func sendRequest(json: JSON) {
+		guard let text = json.rawString(.utf8, options: []) else {
+			log(error: "Bad encoding?!")
+			return
+		}
+		sendRequest(text: text)
 	}
 	
 	public func sendRequest(text: String) {
@@ -79,8 +94,9 @@ extension ServerManager: GCDAsyncSocketDelegate {
 		}
 		switch tagValue {
 		case .bodyTag:
-			let text = String(data: data)
 			log(info: "Did read text \(text)")
+			let json = JSON(data)
+			delegate?.serverDidSendResponse(json)
 		case .headerTag:
 			guard let length = UInt(data: data) else {
 				log(error: "Failed to decode length from data ... \(data)")
